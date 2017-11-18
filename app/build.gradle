@@ -14,7 +14,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "kot.note.musashi.com.appunti"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"

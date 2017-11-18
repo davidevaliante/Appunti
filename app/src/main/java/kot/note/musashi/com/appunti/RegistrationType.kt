@@ -240,7 +240,6 @@ class RegistrationType : Fragment(), GoogleApiClient.ConnectionCallbacks, Google
 
         mailRegistration.setOnClickListener {
             if(!isRegistering) {
-                isRegistering = true
                 startActivityForResult(
                         AuthUI.getInstance().createSignInIntentBuilder()
                                 .setIsSmartLockEnabled(true, true).build(), MAIL_SIGN_IN)
@@ -287,65 +286,71 @@ class RegistrationType : Fragment(), GoogleApiClient.ConnectionCallbacks, Google
             GOOGLE_SIGN_IN_CODE -> {
                 if(data != null) {
                     Log.d("DATA","${data.extras}")
-                    val loginTask = GoogleSignIn.getSignedInAccountFromIntent(data)
+                    try {
+                        val loginTask = GoogleSignIn.getSignedInAccountFromIntent(data)
 
-                    fun saveGoogleCredentialInSmartLock(googleCredential: GoogleSignInAccount){
-                        val credential = Credential.Builder(googleCredential.email)
-                                .setAccountType(IdentityProviders.GOOGLE)
-                                .setName(googleCredential.displayName)
-                                .setProfilePictureUri(googleCredential.photoUrl)
-                                .build()
+                        fun saveGoogleCredentialInSmartLock(googleCredential: GoogleSignInAccount) {
+                            val credential = Credential.Builder(googleCredential.email)
+                                    .setAccountType(IdentityProviders.GOOGLE)
+                                    .setName(googleCredential.displayName)
+                                    .setProfilePictureUri(googleCredential.photoUrl)
+                                    .build()
 
-                        Auth.CredentialsApi.save(mCredentialsApiClient, credential).setResultCallback {
-                            result ->  val status = result.status
-                            if (status.isSuccess) showSuccess("Credenziali salvate con successo")
-                            else{
-                                if(status.hasResolution()){
-                                    try{
-                                        status.startResolutionForResult(activity, RC_SAVE_CREDENTIALS)
-                                    }catch (e : IntentSender.SendIntentException){
-                                        showError("Salvataggio credenziali non riuscito")
+                            Auth.CredentialsApi.save(mCredentialsApiClient, credential).setResultCallback { result ->
+                                val status = result.status
+                                if (status.isSuccess) showSuccess("Credenziali salvate con successo")
+                                else {
+                                    if (status.hasResolution()) {
+                                        try {
+                                            status.startResolutionForResult(activity, RC_SAVE_CREDENTIALS)
+                                        } catch (e: IntentSender.SendIntentException) {
+                                            showError("Salvataggio credenziali non riuscito")
+                                        }
                                     }
                                 }
                             }
+
                         }
 
-                    }
+                        fun writeGoogleUserInFirebase(account: GoogleSignInAccount, id: String) {
+                            val name = account.displayName
+                            val surname = account.familyName
+                            val mail = account.email
+                            val image = account.photoUrl
+                            val provider = "GOOGLE"
 
-                    fun writeGoogleUserInFirebase(account: GoogleSignInAccount, id : String){
-                        val name = account.displayName
-                        val surname = account.familyName
-                        val mail = account.email
-                        val image = account.photoUrl
-                        val provider = "GOOGLE"
+                            val newUser = User(name = name, surname = surname, imageLink = image.toString(),
+                                    provider = provider,
+                                    mail = mail)
 
-                        val newUser = User(name=name, surname = surname,imageLink = image.toString(),
-                                provider=provider,
-                                mail = mail)
-
-                        val db = FirebaseFirestore.getInstance()
-                        db.collection("Users").document(id).set(newUser).addOnCompleteListener {
-                            isRegistering = false
+                            val db = FirebaseFirestore.getInstance()
+                            db.collection("Users").document(id).set(newUser).addOnCompleteListener {
+                                isRegistering = false
+                            }
                         }
-                    }
 
-                    fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
-                        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                        if (auth != null) {
-                            auth!!.signInWithCredential(credential).addOnCompleteListener {
-                                if (it.isSuccessful)
+                        fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
+                            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                            if (auth != null) {
+                                auth!!.signInWithCredential(credential).addOnCompleteListener {
+                                    if (it.isSuccessful)
                                     //saveGoogleCredentialInSmartLock(account)
-                                    showInfo("logged with google")
+                                        showInfo("logged with google")
                                     writeGoogleUserInFirebase(account, it.result.user.uid)
 
+                                }
+                            } else {
+                                isRegistering = false
+                                showError("auth is null")
                             }
-                        } else {
-                            isRegistering = false
-                            showError("auth is null") }
-                    }
+                        }
 
-                    val account = loginTask.getResult(ApiException::class.java)
-                    firebaseAuthWithGoogle(account)
+                        val account = loginTask.getResult(ApiException::class.java)
+                        firebaseAuthWithGoogle(account)
+                    }catch(e : ApiException){
+                        isRegistering = false
+                        //log error ???
+                    }
                 }else{
                     isRegistering = false
                     activity?.showError("Registrazione fallita")
