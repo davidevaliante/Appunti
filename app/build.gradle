@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'appunti_key'
+            keyPassword 'gravitation'
+            storeFile file('C:/Users/akain/StudioProjects/Appunti/appunti_keystore.jks')
+            storePassword 'grav4itation11'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "kot.note.musashi.com.appunti"
@@ -16,38 +24,40 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.config
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.google.firebase:firebase-auth:11.4.2'
-    implementation 'com.google.firebase:firebase-firestore:11.4.2'
+    implementation 'com.google.android.gms:play-services-auth:11.6.0'
+    implementation 'com.google.firebase:firebase-auth:11.6.0'
+    implementation 'com.google.firebase:firebase-firestore:11.6.0'
     implementation 'com.firebaseui:firebase-ui-firestore:3.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.1.0'
-    implementation 'com.facebook.android:facebook-login:4.27.0'
-    implementation 'com.android.support:multidex:1.0.0'
-    implementation 'com.android.support:cardview-v7:27.0.0'
-    implementation 'com.android.support:support-core-ui:27.0.0'
-    implementation 'com.android.support:support-compat:27.0.0'
-    implementation 'com.android.support:support-fragment:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
-    implementation 'com.android.support:support-media-compat:27.0.0'
-    implementation 'com.android.support:support-vector-drawable:27.0.0'
+    implementation 'com.facebook.android:facebook-login:4.28.0'
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:cardview-v7:27.0.1'
+    implementation 'com.android.support:support-core-ui:27.0.1'
+    implementation 'com.android.support:support-compat:27.0.1'
+    implementation 'com.android.support:support-fragment:27.0.1'
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
+    implementation 'com.android.support:support-media-compat:27.0.1'
+    implementation 'com.android.support:support-vector-drawable:27.0.1'
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
-    implementation 'com.android.support:customtabs:27.0.0'
+    implementation 'com.android.support:customtabs:27.0.1'
     implementation 'com.github.GrenderG:Toasty:1.2.5'
-    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
-
-
     implementation 'com.android.support:design:27.0.0'
-
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

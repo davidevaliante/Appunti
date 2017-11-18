@@ -8,6 +8,7 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.AuthCredential
@@ -40,7 +41,8 @@ class Launcher : AppCompatActivity() {
 
         log.setOnClickListener { goToPage<Login>() }
 
-        logout.setOnClickListener { AuthUI.getInstance().signOut(this) }
+        logout.setOnClickListener { AuthUI.getInstance().signOut(this)
+        LoginManager.getInstance().logOut()}
 
 
     }

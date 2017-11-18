@@ -13,20 +13,29 @@ import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.Toast
 import es.dmoral.toasty.Toasty
-import android.graphics.Color.parseColor
-import cn.pedant.SweetAlert.SweetAlertDialog
 
 
 
 
-// mostra un Toast di base
+// mostra un Toast di base per le activity
 fun Context.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
     Toast.makeText(this, "$message", duration).show()
 }
 
-// mostra messaggio di errore (background rosso)
+// mostra un Toast di base per i Fragment
+fun Fragment.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
+    Toast.makeText(activity, "$message", duration).show()
+}
+
+// mostra messaggio di errore (background rosso) per le Activity
 fun Context.showError (message : CharSequence, duration : Int = Toast.LENGTH_SHORT){
     Toasty.error(this, message, duration).show()
+}
+
+
+// mostra messaggio di errore (background rosso) per i Fragment
+fun Fragment.showError(message : String, duration : Int = Toast.LENGTH_SHORT){
+    Toasty.error(context!!, "$message", duration).show()
 }
 
 // mostra messaggio di successo (background verde)
@@ -34,9 +43,19 @@ fun Context.showSuccess (message : CharSequence, duration : Int = Toast.LENGTH_S
     Toasty.success(this, message, duration).show()
 }
 
+// mostra messaggio di successo (background rosso) per i Fragment
+fun Fragment.showSuccess(message : String, duration : Int = Toast.LENGTH_SHORT){
+    Toasty.success(context!!, "$message", duration).show()
+}
+
 // mostra messaggio di info (background blu)
 fun Context.showInfo (message : CharSequence, duration : Int = Toast.LENGTH_SHORT){
     Toasty.info(this, message, duration).show()
+}
+
+// mostra messaggio di info (background rosso) per i Fragment
+fun Fragment.showInfo(message : String, duration : Int = Toast.LENGTH_SHORT){
+    Toasty.info(context!!, "$message", duration).show()
 }
 
 // aggiunge al container X il fragment Y

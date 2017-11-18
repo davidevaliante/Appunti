@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "998897182120-o0cc57oh5ln6n71kd1br6kpdj2n84abo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kot.note.musashi.com.appunti",
+            "certificate_hash": "125db5aaafdec5d9ba7198aec7950136c41a3408"
+          }
+        },
+        {
           "client_id": "998897182120-qok5utto7m9he5g8tnnc4h921kcsbq9b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
