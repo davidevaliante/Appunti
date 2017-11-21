@@ -45,13 +45,14 @@ class UniversityPicker : Fragment() {
     var pickedCourse : Course?=null
 
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflateInContainer(R.layout.fragment_university_picker, container)
         var recyclerView = root.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
         // customAutocomplete = root.findViewById(R.id.customAutocomplete)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        //createDummy()
+
         return root
     }
 
@@ -281,23 +282,5 @@ class UniversityPicker : Fragment() {
 
     }
 
-    fun createDummy(){
-        val db = FirebaseFirestore.getInstance()
-        val math = Course("Matematica", "qualche descrizione utile")
-        val physics = Course("Fisica", "qualche descrizione utile")
-        val eng = Course("Ingegneria", "qualche descrizione utile")
-        val lettere = Course("Lettere", "qualche descrizione utile")
-        val chem = Course("Chemistry", "qualche descrizione utile")
-        db.collection("Courses").add(math)
-        db.collection("Courses").add(physics)
-
-        db.collection("Courses").add(eng)
-
-        db.collection("Courses").add(lettere)
-
-        db.collection("Courses").add(chem)
-
-
-    }
 
 }// Required empty public constructor
