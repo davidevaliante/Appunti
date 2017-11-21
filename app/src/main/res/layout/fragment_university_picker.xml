@@ -1,0 +1,133 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="kot.note.musashi.com.appunti.UniversityPicker">
+
+    <LinearLayout
+        android:id="@+id/choiceLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:gravity="center"
+            android:paddingBottom="22dp"
+            android:paddingTop="28dp"
+            android:text="Denominazione istituto"
+            android:textSize="18sp" />
+
+        <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+            android:id="@+id/group_choices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:tbgCheckedButton="@+id/select_university"
+            app:tbgChildSpacing="auto"
+            app:tbgFlow="false">
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/select_university"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Università"
+                app:tbgMarkerColor="@color/colorPrimary" />
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/select_poli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Politecnico"
+                app:tbgMarkerColor="@color/colorPrimary" />
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/select_accademy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Accademia"
+                app:tbgMarkerColor="@color/colorPrimary" />
+
+        </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/universityLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="4dp"
+            app:srcCompat="@drawable/grey_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <EditText
+            android:hint="Cerca Università..."
+            android:padding="16dp"
+            android:id="@+id/customAutocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/fui_transparent"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/courseLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="4dp"
+            app:srcCompat="@drawable/grey_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <EditText
+            android:hint="Cerca Corso..."
+            android:padding="16dp"
+            android:id="@+id/searchCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/fui_transparent"
+            />
+        </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginStart="90dp"
+        android:id="@+id/submitButton"
+        android:background="@drawable/rounded_corner"
+        android:fontFamily="@font/raleway_bold"
+        android:padding="16dp"
+        android:text="Conferma"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

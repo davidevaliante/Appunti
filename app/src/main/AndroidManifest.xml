@@ -16,6 +16,11 @@
         android:supportsRtl="true"
         tools:replace="android:icon"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             tools:replace="android:value"
@@ -35,7 +40,8 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".Registration" />
+        <activity android:name=".Registration"
+                  android:screenOrientation="portrait"  />
         <activity android:name=".Login"></activity>
     </application>
 

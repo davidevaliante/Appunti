@@ -22,5 +22,7 @@ fun EditText.removeError(){
 // rende la view visinile
 fun View.setVisible()  { this.visibility = View.VISIBLE }
 
+fun View.setGone() {this.visibility = View.GONE}
+
 // rende la view invisibile
 fun View.setInvisible()  { this.visibility = View.INVISIBLE }

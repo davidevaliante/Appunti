@@ -12,3 +12,7 @@ data class User(var name : String? = null,
                 var imageLink : String? = null,
                 var provider : String?= null,
                 var mail : String?= null)
+
+data class University(var textPrimary : String?=null, var textSecondary : String?=null )
+
+data class Course(var courseName : String?=null, var courseDescription : String?=null)

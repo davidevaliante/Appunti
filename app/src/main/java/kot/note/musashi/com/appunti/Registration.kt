@@ -21,7 +21,8 @@ class Registration : AppCompatActivity(){
 
         setContentView(R.layout.activity_registration)
 
-        addFragment(registrationContainer.id, RegistrationType())
+        //addFragment(registrationContainer.id, RegistrationType())
+        addFragment(registrationContainer.id, UniversityPicker())
 
     }
 

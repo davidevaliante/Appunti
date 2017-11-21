@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:id="@+id/textPrimary"
+            android:fontFamily="@font/raleway_bold"
+            android:text="lalala"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="@color/light_grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:padding="8dp"
+            android:id="@+id/textSecondary"
+            android:text="lalalalalalala"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    <View
+        android:background="@drawable/main_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
