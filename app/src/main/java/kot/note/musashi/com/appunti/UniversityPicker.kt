@@ -282,5 +282,7 @@ class UniversityPicker : Fragment() {
 
     }
 
+    fun lol (){}
+
 
 }// Required empty public constructor
