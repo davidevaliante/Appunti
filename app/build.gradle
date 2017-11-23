@@ -7,7 +7,7 @@ android {
         config {
             keyAlias 'appunti_key'
             keyPassword 'gravitation'
-            storeFile file('C:/Users/akain/StudioProjects/Appunti/appunti_keystore.jks')
+            storeFile file('../appunti_keystore.jks')
             storePassword 'grav4itation11'
         }
     }

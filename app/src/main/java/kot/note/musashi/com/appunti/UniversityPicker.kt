@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
@@ -16,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.GridLayout
 import android.widget.ImageView
 import com.google.android.gms.location.places.AutocompletePrediction
 import com.google.android.gms.location.places.Places
@@ -34,13 +36,12 @@ import kotlinx.android.synthetic.main.university_card.view.*
 
 class UniversityPicker : Fragment() {
 
-    val universityExclude = listOf("Uni ", "uni ", "Università ", "Universita ")
-    val politecnicoExclude = listOf("Pol", "poli", "politecnico","polite","polit")
-    val accademyExclude = listOf("acc","accademia","accade","accad","acca")
-    var uniListAdapter : UniversityAdapter?= null
-    var courseListAdapter : CourseAdapter?=null
+    val universityExclude by lazy { listOf("Uni ", "uni ", "Università ", "Universita ") }
+    val politecnicoExclude by lazy { listOf("Pol", "poli", "politecnico","polite","polit")}
+    val accademyExclude by lazy {listOf("acc","accademia","accade","accad","acca")}
+    lateinit var uniListAdapter : UniversityAdapter
+    lateinit var courseListAdapter : CourseAdapter
     var selection : String?= "Università"
-    //var customAutocomplete : EditText?=null
     var pickedUniversity : University?=null
     var pickedCourse : Course?=null
 
@@ -49,9 +50,6 @@ class UniversityPicker : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflateInContainer(R.layout.fragment_university_picker, container)
-        var recyclerView = root.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
-        // customAutocomplete = root.findViewById(R.id.customAutocomplete)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
 
         return root
     }
@@ -60,6 +58,10 @@ class UniversityPicker : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val dataClient = Places.getGeoDataClient(activity!!, null)
+
+        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
+
 
         uniListAdapter = UniversityAdapter(emptyList())
         courseListAdapter = CourseAdapter(emptyList())
@@ -78,9 +80,9 @@ class UniversityPicker : Fragment() {
                     selection = "Politecnico"
                 }
             }
-            customAutocomplete?.hint = "Cerca $selection..."
+            customAutocomplete.hint = "Cerca $selection..."
         }
-
+        
 
         //ricerca università
         customAutocomplete?.addTextChangedListener(object : TextWatcher{
@@ -90,6 +92,8 @@ class UniversityPicker : Fragment() {
                 fun cleanedUserString() : String{
                     // lista di parole da evitare inizializzata dinamicamente grazie a
                     // (when) in base alla selezione dell'utente
+
+
                     var listToExclude: List<String> = when(selection){
                         "Università" -> universityExclude
                         "Accademia" -> accademyExclude
@@ -105,6 +109,8 @@ class UniversityPicker : Fragment() {
                     }
                     return s
                 }
+
+
                 // va ogni 400 millisecondi
                 val runnable = Runnable {
                 if (contenuto.toString().isNotEmpty()) {
@@ -121,6 +127,7 @@ class UniversityPicker : Fragment() {
                             result.result.forEach {
                                 resultList.add(it)
                             }
+
                             uniListAdapter?.updateList(resultList)
                         }
                     }
@@ -167,30 +174,7 @@ class UniversityPicker : Fragment() {
 
     }
 
-    // nasconde tutto quello che non serve durante la query per i corsi per avere più spazio
-    fun hideViewsForCourseSearch(){
-        choiceLayout.setGone()
-        universityLayout.setGone()
-        submitButton.setGone()
-    }
-    // ripristina tutte le view quando la query è finita (click sulla carta)
-    fun restoreViewAfterCourseSearch(){
-        choiceLayout.setVisible()
-        universityLayout.setVisible()
-        submitButton.setVisible()
-    }
-    // nasconde tutto quello che non serve durante la query delle università per avere più spazio
-    fun hideViewsForUniversitySearch(){
-        choiceLayout.setGone()
-        submitButton.setGone()
-        courseLayout.setGone()
-    }
-    // ripristina tutte le view quando la query è finita (click sulla carta)
-    fun restoreViewAfterUniversitySearch(){
-        choiceLayout.setVisible()
-        submitButton.setVisible()
-        courseLayout.setVisible()
-    }
+
 
     // adapter per la query sulle università
     inner class UniversityAdapter(list: List<AutocompletePrediction>) : RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder>() {
@@ -282,7 +266,30 @@ class UniversityPicker : Fragment() {
 
     }
 
-    fun lol (){}
 
+    // nasconde tutto quello che non serve durante la query per i corsi per avere più spazio
+    fun hideViewsForCourseSearch(){
+        choiceLayout.setGone()
+        universityLayout.setGone()
+        submitButton.setGone()
+    }
+    // ripristina tutte le view quando la query è finita (click sulla carta)
+    fun restoreViewAfterCourseSearch(){
+        choiceLayout.setVisible()
+        universityLayout.setVisible()
+        submitButton.setVisible()
+    }
+    // nasconde tutto quello che non serve durante la query delle università per avere più spazio
+    fun hideViewsForUniversitySearch(){
+        choiceLayout.setGone()
+        submitButton.setGone()
+        courseLayout.setGone()
+    }
+    // ripristina tutte le view quando la query è finita (click sulla carta)
+    fun restoreViewAfterUniversitySearch(){
+        choiceLayout.setVisible()
+        submitButton.setVisible()
+        courseLayout.setVisible()
+    }
 
 }// Required empty public constructor
