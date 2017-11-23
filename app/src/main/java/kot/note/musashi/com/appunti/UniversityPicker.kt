@@ -266,6 +266,7 @@ class UniversityPicker : Fragment() {
 
     }
 
+    fun lol(){}
 
     // nasconde tutto quello che non serve durante la query per i corsi per avere più spazio
     fun hideViewsForCourseSearch(){
