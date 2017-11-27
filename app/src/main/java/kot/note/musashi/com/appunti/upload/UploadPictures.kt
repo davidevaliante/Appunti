@@ -15,6 +15,7 @@ import permissions.dispatcher.RuntimePermissions
 import android.provider.MediaStore
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.view.MotionEventCompat
 
 import android.support.v7.app.AppCompatActivity
@@ -29,6 +30,8 @@ import android.util.Log
 import android.view.MotionEvent
 import com.squareup.picasso.Picasso
 import kot.note.musashi.com.appunti.extensions.*
+import kotlinx.android.synthetic.main.fragment_university_picker.*
+import kotlinx.android.synthetic.main.fragment_upload_pictures.view.*
 import kotlinx.android.synthetic.main.user_image_card.*
 import kotlinx.android.synthetic.main.user_image_card.view.*
 import xyz.dev_juyoung.cropicker.models.Media
@@ -64,7 +67,6 @@ class UploadPictures : Fragment(), OnStartDragListener {
         gallery.setOnClickListener { goToGalleryWithPermissionCheck() }
 
         imageRecyclerView.layoutManager = GridLayoutManager(activity as AppCompatActivity,3)
-        imageRecyclerView.setHasFixedSize(true)
 
     }
 
@@ -88,18 +90,13 @@ class UploadPictures : Fragment(), OnStartDragListener {
             CroPicker.REQUEST_ALBUM -> {
                 if(resultCode == Activity.RESULT_OK){
                     val results = data?.getParcelableArrayListExtra<Media>(CroPicker.EXTRA_RESULT_IMAGES) as ArrayList<Media>
-                    if(results == null || results.isEmpty()) showError("isnull or empty")
-                    showInfo(results?.get(0)?.imagePath.toString())
-                    val pathArray = mutableListOf<String>()
-                    results?.forEach {
-                        Log.d("DATA_IMAGES","${results.indexOf(it)} : path -> ${it.imagePath}")
-                        pathArray.add(it.imagePath.toString())
-                    }
-                    val myAdapter = UserImageAdapter(pathArray,this)
-                    val callback = SimpleItemTouchHelperCallback(myAdapter)
-                    mItemTouchHelper = ItemTouchHelper(callback)
+                    val imagePathList = results.map { it.imagePath }
+                    val imageAdapter = UserImageAdapter(emptyList(), this)
+                    imageAdapter.updateList(imagePathList)
+                    val touchCallback = SimpleItemTouchHelperCallback(imageAdapter)
+                    mItemTouchHelper = ItemTouchHelper(touchCallback)
                     mItemTouchHelper?.attachToRecyclerView(imageRecyclerView)
-                    imageRecyclerView.adapter = myAdapter
+                    imageRecyclerView.adapter = imageAdapter
                 }else{
                     showInfo("Result code not ok")
                 }
@@ -109,6 +106,12 @@ class UploadPictures : Fragment(), OnStartDragListener {
 
 
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        imageRecyclerView.adapter = null
+        mItemTouchHelper?.attachToRecyclerView(null)
     }
 
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -130,7 +133,7 @@ class UploadPictures : Fragment(), OnStartDragListener {
 
 
 
-    inner class UserImageAdapter(imageList : MutableList<String>, dragListener: OnStartDragListener): RecyclerView.Adapter<UserImageAdapter.UserImageViewHolder>(),ItemTouchHelperAdapter{
+    inner class UserImageAdapter(imageList : List<String>, dragListener: OnStartDragListener): RecyclerView.Adapter<UserImageAdapter.UserImageViewHolder>(),ItemTouchHelperAdapter{
         var images = imageList
         val dragger = dragListener
 
@@ -153,7 +156,10 @@ class UploadPictures : Fragment(), OnStartDragListener {
             }
         }
 
-        override fun getItemCount(): Int = images.size
+        override fun getItemCount(): Int {
+            Log.d("R_SIZE", "${images.size}")
+            return images.size
+        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserImageViewHolder {
             val view = parent.inflate(R.layout.user_image_card, false)
@@ -162,14 +168,17 @@ class UploadPictures : Fragment(), OnStartDragListener {
 
         override fun onBindViewHolder(holder: UserImageViewHolder, position: Int) {
             holder.bindViews(images[position])
-
-
             holder.itemView.setOnTouchListener { view, motionEvent ->
                 if(motionEvent.action == MotionEvent.ACTION_DOWN) {
                     dragger.onStartDrag(holder)
                 }
                 false
             }
+        }
+
+        fun updateList(newList : List<String>){
+            images =  newList
+            notifyDataSetChanged()
         }
 
 

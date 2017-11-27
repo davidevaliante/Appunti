@@ -39,10 +39,8 @@ interface OnStartDragListener {
 
     fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
 }
-
-
-class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
-    val mAdapter = adapter
+class SimpleItemTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
+    var mAdapter = adapter
     override fun isLongPressDragEnabled(): Boolean {
         return true
     }
@@ -65,6 +63,11 @@ class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter)
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         mAdapter.onItemDismiss(viewHolder.adapterPosition)
+    }
+
+    fun updateAdapter(newAdapter: ItemTouchHelperAdapter) : SimpleItemTouchHelperCallback{
+        mAdapter=newAdapter
+        return this
     }
 
 }
