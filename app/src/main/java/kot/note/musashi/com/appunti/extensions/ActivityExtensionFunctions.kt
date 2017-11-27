@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
@@ -67,9 +68,27 @@ fun AppCompatActivity.addFragment(container : Int, frag : Fragment) {
     supportFragmentManager.customTransaction { add(container, frag) }
 }
 
+// aggiunge al container X il fragment Y
+fun FragmentActivity.addFragment(container : Int, frag : Fragment) {
+    supportFragmentManager.customTransaction { add(container, frag) }
+}
+
+
+
+
 // rimuove il fragment X
 fun AppCompatActivity.removeFragment(frag : Fragment){
     supportFragmentManager.customTransaction { remove(frag) }
+}
+
+// rimuove il fragment X
+fun FragmentActivity.removeFragment(frag : Fragment){
+    supportFragmentManager.customTransaction { remove(frag) }
+}
+
+// rimuove il fragment X
+fun FragmentActivity.replaceFrag(containerId : Int,frag : Fragment){
+    supportFragmentManager.customTransaction { replace(containerId,frag) }
 }
 
 /* cambia Activity      ***NOTA va passato negli apici e il bundle è opzionale

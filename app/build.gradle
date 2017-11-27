@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+// annotation processor per kotlin
+apply plugin: 'kotlin-kapt'
+
 
 android {
     signingConfigs {
@@ -61,6 +64,14 @@ dependencies {
     implementation 'com.android.support:support-v4:27.0.1'
     implementation 'com.google.android.gms:play-services-places:11.6.0'
     implementation 'com.nex3z:toggle-button-group:1.1.0'
+    implementation 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    implementation 'xyz.dev_juyoung:cropicker:1.0.3'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

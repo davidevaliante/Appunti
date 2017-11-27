@@ -6,6 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import kot.note.musashi.com.appunti.R
 import kotlinx.android.synthetic.main.university_card.view.*
+import android.support.v7.widget.helper.ItemTouchHelper.Callback.makeMovementFlags
+import android.support.v7.widget.helper.ItemTouchHelper
+
+
 
 class UniAdapter (val list : List<String>, ctx : Activity) : RecyclerView.Adapter<UniversityViewHolder>(){
 
@@ -27,4 +31,40 @@ class UniAdapter (val list : List<String>, ctx : Activity) : RecyclerView.Adapte
 
 }
 
+interface ItemTouchHelperAdapter {
+    fun onItemMove(fromPosition : Int, toPosition : Int) : Boolean
+    fun onItemDismiss(position : Int)
+}
+interface OnStartDragListener {
 
+    fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
+}
+
+
+class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
+    val mAdapter = adapter
+    override fun isLongPressDragEnabled(): Boolean {
+        return true
+    }
+
+    override fun isItemViewSwipeEnabled(): Boolean {
+        return true
+    }
+
+    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        val swipeFlags = 0
+        return makeMovementFlags(dragFlags, swipeFlags)
+    }
+
+    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder): Boolean {
+        mAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        return true
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        mAdapter.onItemDismiss(viewHolder.adapterPosition)
+    }
+
+}

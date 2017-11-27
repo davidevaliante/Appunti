@@ -61,25 +61,19 @@ class UniversityPicker : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-
-
         uniListAdapter = UniversityAdapter(emptyList())
         courseListAdapter = CourseAdapter(emptyList())
+        // di base passa l'uni adapter vuoto
         recyclerView.adapter = uniListAdapter
 
         // switch per il tipo di struttura
         group_choices.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
-                R.id.select_university -> {
-                    selection = "Università"
-                }
-                R.id.select_accademy ->{
-                    selection = "Accademia"
-                }
-                R.id.select_poli -> {
-                    selection = "Politecnico"
-                }
+                R.id.select_university ->  selection = "Università"
+                R.id.select_accademy -> selection = "Accademia"
+                R.id.select_poli -> selection = "Politecnico"
             }
+            // cambia l'hint dell'edit-text rispetto al pulsante scelto
             customAutocomplete.hint = "Cerca $selection..."
         }
         
@@ -110,7 +104,6 @@ class UniversityPicker : Fragment() {
                     return s
                 }
 
-
                 // va ogni 400 millisecondi
                 val runnable = Runnable {
                 if (contenuto.toString().isNotEmpty()) {
@@ -127,7 +120,7 @@ class UniversityPicker : Fragment() {
                             result.result.forEach {
                                 resultList.add(it)
                             }
-
+                            // passa all'adapter i dati della query
                             uniListAdapter?.updateList(resultList)
                         }
                     }
@@ -139,7 +132,6 @@ class UniversityPicker : Fragment() {
                 }
                 }
                 Handler().postDelayed(runnable, 400)
-
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -266,7 +258,6 @@ class UniversityPicker : Fragment() {
 
     }
 
-    fun lol(){}
 
     // nasconde tutto quello che non serve durante la query per i corsi per avere più spazio
     fun hideViewsForCourseSearch(){

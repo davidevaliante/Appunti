@@ -35,11 +35,13 @@ class Launcher : AppCompatActivity() {
         mCallbackManager = CallbackManager.Factory.create()
 
 
-        if (auth?.currentUser == null) goToPage<Registration>() else goToPage<Login>()
+        // if (auth?.currentUser == null) goToPage<Registration>() else goToPage<Login>()
 
         reg.setOnClickListener { goToPage<Registration>() }
 
         log.setOnClickListener { goToPage<Login>() }
+
+        upload.setOnClickListener{ goToPage<NoteUpload>()}
 
         logout.setOnClickListener { AuthUI.getInstance().signOut(this)
         LoginManager.getInstance().logOut()}

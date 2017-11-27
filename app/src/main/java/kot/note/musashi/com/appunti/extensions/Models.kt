@@ -16,3 +16,11 @@ data class User(var name : String? = null,
 data class University(var textPrimary : String?=null, var textSecondary : String?=null )
 
 data class Course(var courseName : String?=null, var courseDescription : String?=null)
+
+data class Notes(var name: String?=null, // titolo
+                 var description : String?= null,
+                 var uploadTimeStamp: Long = 0,
+                 var latestUpdateTimeStamp: Long = 0,
+                 var rating: Int = 0,
+                 var ratingSum: Float =0f
+                 )
