@@ -65,9 +65,6 @@ class SimpleItemTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouch
         mAdapter.onItemDismiss(viewHolder.adapterPosition)
     }
 
-    fun updateAdapter(newAdapter: ItemTouchHelperAdapter) : SimpleItemTouchHelperCallback{
-        mAdapter=newAdapter
-        return this
-    }
+
 
 }
