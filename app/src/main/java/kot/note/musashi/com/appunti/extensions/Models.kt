@@ -1,5 +1,12 @@
 package kot.note.musashi.com.appunti.extensions
 
+// un po' di costanti
+// Nodi del DB
+const val USERS : String = "Users"
+const val UNIVERSITY : String = "Uni"
+const val COURSES : String = "Courses"
+const val NOTES : String = "Notes"
+
 //modello dell'utente dell'app
 data class User(var name : String? = null,
                 var surname : String? = null,
