@@ -21,15 +21,9 @@ import es.dmoral.toasty.Toasty
 import kot.note.musashi.com.appunti.NoteUpload
 import kotlinx.android.synthetic.main.activity_note_upload.*
 
-
 // mostra un Toast di base per le activity
 fun Context.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
     Toast.makeText(this, "$message", duration).show()
-}
-
-// mostra un Toast di base per i Fragment
-fun Fragment.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
-    Toast.makeText(activity, "$message", duration).show()
 }
 
 // mostra messaggio di errore (background rosso) per le Activity
@@ -37,20 +31,9 @@ fun Context.showError (message : CharSequence, duration : Int = Toast.LENGTH_SHO
     Toasty.error(this, message, duration).show()
 }
 
-
-// mostra messaggio di errore (background rosso) per i Fragment
-fun Fragment.showError(message : String, duration : Int = Toast.LENGTH_SHORT){
-    Toasty.error(context!!, "$message", duration).show()
-}
-
 // mostra messaggio di successo (background verde)
 fun Context.showSuccess (message : CharSequence, duration : Int = Toast.LENGTH_SHORT){
     Toasty.success(this, message, duration).show()
-}
-
-// mostra messaggio di successo (background rosso) per i Fragment
-fun Fragment.showSuccess(message : String, duration : Int = Toast.LENGTH_SHORT){
-    Toasty.success(context!!, "$message", duration).show()
 }
 
 // mostra messaggio di info (background blu)
@@ -58,38 +41,16 @@ fun Context.showInfo (message : CharSequence, duration : Int = Toast.LENGTH_SHOR
     Toasty.info(this, message, duration).show()
 }
 
-// mostra messaggio di info (background rosso) per i Fragment
-fun Fragment.showInfo(message : String, duration : Int = Toast.LENGTH_SHORT){
-    Toasty.info(context!!, "$message", duration).show()
-}
-
 // aggiunge al container X il fragment Y
 fun AppCompatActivity.addFragment(container : Int, frag : Fragment) {
     supportFragmentManager.customTransaction { add(container, frag) }
 }
-
-// aggiunge al container X il fragment Y
-fun FragmentActivity.addFragment(container : Int, frag : Fragment) {
-    supportFragmentManager.customTransaction { add(container, frag) }
-}
-
-
-
 
 // rimuove il fragment X
 fun AppCompatActivity.removeFragment(frag : Fragment){
     supportFragmentManager.customTransaction { remove(frag) }
 }
 
-// rimuove il fragment X
-fun FragmentActivity.removeFragment(frag : Fragment){
-    supportFragmentManager.customTransaction { remove(frag) }
-}
-
-// rimuove il fragment X
-fun FragmentActivity.replaceFrag(containerId : Int,frag : Fragment){
-    supportFragmentManager.customTransaction { replace(containerId,frag) }
-}
 
 /* cambia Activity      ***NOTA va passato negli apici e il bundle è opzionale
 *
@@ -128,25 +89,11 @@ inline fun <reified T : Any> Context.getFromPreferences(key : String, default : 
     }
 }
 
-// esegue una delle fragment Transaction a scelta
-inline fun FragmentManager.customTransaction(func : FragmentTransaction.() -> FragmentTransaction){
-    beginTransaction().func().commit()
-}
-
 // prende un colore
 fun Context.takeColor(color : Int) : Int = ContextCompat.getColor(this, color)
 
-// da usare per ottenere il ViewGroup in un Fragment
-fun Fragment.inflateInContainer(root : Int, container : ViewGroup?) : ViewGroup {
-    return this.layoutInflater.inflate(root, container, false) as ViewGroup
-}
-
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
-}
-
-fun Fragment.hideKeyboard() {
-    activity?.hideKeyboard(view!!)
 }
 
 fun Activity.hideKeyboard() {

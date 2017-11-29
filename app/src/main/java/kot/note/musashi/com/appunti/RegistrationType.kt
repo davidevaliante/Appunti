@@ -6,17 +6,13 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentSender
-import android.graphics.Color
 import android.net.Uri
-import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import bolts.Task
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -177,7 +173,7 @@ class RegistrationType : Fragment(), GoogleApiClient.ConnectionCallbacks, Google
 
                                     //id utente da utilizzare come nome del documento
                                     val userId = it.result.user.uid
-                                    db.collection("Users").document(userId).set(facebookUser).addOnCompleteListener {
+                                    db.collection(USERS).document(userId).set(facebookUser).addOnCompleteListener {
                                         //toglie il dialogo di attesa
                                         //saveFacebookCredentialInSmartLock(name, surname, profilePicture)
 
@@ -324,7 +320,7 @@ class RegistrationType : Fragment(), GoogleApiClient.ConnectionCallbacks, Google
                                     mail = mail)
 
                             val db = FirebaseFirestore.getInstance()
-                            db.collection("Users").document(id).set(newUser).addOnCompleteListener {
+                            db.collection(USERS).document(id).set(newUser).addOnCompleteListener {
                                 isRegistering = false
                             }
                         }
@@ -365,14 +361,14 @@ class RegistrationType : Fragment(), GoogleApiClient.ConnectionCallbacks, Google
                     if(id != null){
                         val db = FirebaseFirestore.getInstance()
 
-                        db.collection("Users").document(id).get().addOnCompleteListener {
+                        db.collection(USERS).document(id).get().addOnCompleteListener {
                             if(!it.result.exists()) {
                                 val idp = IdpResponse.fromResultIntent(data)
                                 val newUser = User(
                                         mail = idp?.email,
                                         provider = "MAIL")
 
-                                db.collection("Users").document(id).set(newUser).addOnCompleteListener {
+                                db.collection(USERS).document(id).set(newUser).addOnCompleteListener {
                                     isRegistering = false
 
                                 }

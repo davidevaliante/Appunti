@@ -35,15 +35,17 @@ class UploadDescription : Fragment() {
     }
 
     fun goToNextFrag() {
-        fun checkValues(): Boolean = !noteDescription.text.isEmpty() && !noteName.text.isEmpty() &&
-                                        noteDescription.text.length > 8  && noteName.text.length > 8
+        fun checkValues(): Boolean = !noteDescription.text.isEmpty() &&
+                !noteName.text.isEmpty() &&
+                noteDescription.text.length > 8 &&
+                noteName.text.length > 8
 
         if(checkValues()){
             val db = FirebaseFirestore.getInstance()
             val newNote = Notes(name=noteName.text.toString(),
                                 description = noteDescription.text.toString(),
                                 latestUpdateTimeStamp = System.currentTimeMillis())
-            db.collection("Notes").add(newNote).addOnCompleteListener { task ->
+            db.collection(NOTES).add(newNote).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     activity?.addAndCommitPreference("LAST_DRAFT", task.result.id)
                     val cont = c as ViewGroup
