@@ -20,8 +20,8 @@ public class Compressor {
     private float maxWidth = 612.0f;
     private float maxHeight = 816.0f;
 
-   /* private float maxWidth = 1440.0f;
-    private float maxHeight = 816.0f;*/
+
+
     private Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
     private int quality = 80;
     private String destinationDirectoryPath;
