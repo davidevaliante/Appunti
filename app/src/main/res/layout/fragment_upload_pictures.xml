@@ -1,39 +1,88 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="kot.note.musashi.com.appunti.upload.UploadPictures">
 
 
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/addGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            app:srcCompat="@drawable/ic_camera_icon" />
+
+        <ImageView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/gallery"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            app:srcCompat="@drawable/ic_gallery_icon" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        android:id="@+id/editImageGroup"
+        android:padding="16dp"
+        android:layout_above="@id/imageRecyclerView"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_margin="16dp"
-            android:id="@+id/camera"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/ic_camera_icon" />
+        <TextView
+            android:id="@+id/editTitle"
+            android:text="Modifica posizioni"
+            android:textSize="16sp"
+            android:fontFamily="@font/raleway_bold"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <ImageView
-            android:layout_margin="16dp"
-            android:id="@+id/gallery"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/ic_gallery_icon" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/editHint"
+            android:textSize="16sp"
+            android:layout_toEndOf="@+id/editTitle"
+            android:text="Trascina nella posizione desiderata"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/raleway_bold"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/moveImageSwitch"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <Button
+        android:text="Crash me !"
+        android:id="@+id/crashButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
         android:layout_below="@+id/addGroup"
         android:id="@+id/imageRecyclerView"
         android:layout_width="match_parent"
@@ -42,4 +91,6 @@
     </android.support.v7.widget.RecyclerView>
 
 
-</RelativeLayout>
+
+
+</LinearLayout>

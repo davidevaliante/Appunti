@@ -18,8 +18,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import es.dmoral.toasty.Toasty
-
-
+import kot.note.musashi.com.appunti.NoteUpload
+import kotlinx.android.synthetic.main.activity_note_upload.*
 
 
 // mostra un Toast di base per le activity
@@ -156,4 +156,14 @@ fun Activity.hideKeyboard() {
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+fun NoteUpload.updateStepOne(string : String){
+    uploadStep1.text = string
+}
+
+fun <T, R> List<T>.mapVar(transform: (T) -> R): List<R> {
+    var result = arrayListOf<R>()
+    for (item in this)
+        result.add(transform(item))
+    return result
 }

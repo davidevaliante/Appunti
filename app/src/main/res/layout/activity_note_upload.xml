@@ -7,7 +7,53 @@
     android:layout_height="match_parent"
     tools:context="kot.note.musashi.com.appunti.NoteUpload">
 
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="8dp"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:id="@+id/uploadStep1"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:padding="8dp"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/white"
+            android:id="@+id/uploadStep2"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:padding="8dp"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/white"
+            android:id="@+id/uploadStep3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
     <FrameLayout
+
+        android:visibility="gone"
         android:id="@+id/uploadFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

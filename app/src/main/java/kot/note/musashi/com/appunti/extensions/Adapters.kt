@@ -1,12 +1,14 @@
 package kot.note.musashi.com.appunti.extensions
 
 import android.app.Activity
-import android.content.Context
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.PagerAdapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import kot.note.musashi.com.appunti.R
 import kotlinx.android.synthetic.main.university_card.view.*
-import android.support.v7.widget.helper.ItemTouchHelper.Callback.makeMovementFlags
 import android.support.v7.widget.helper.ItemTouchHelper
 
 
@@ -31,14 +33,22 @@ class UniAdapter (val list : List<String>, ctx : Activity) : RecyclerView.Adapte
 
 }
 
+interface ItemTouchHelpedViewHolder{
+    fun onItemSelected()
+    fun onItemClear()
+}
+
 interface ItemTouchHelperAdapter {
+
     fun onItemMove(fromPosition : Int, toPosition : Int) : Boolean
     fun onItemDismiss(position : Int)
 }
+
 interface OnStartDragListener {
 
     fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
 }
+// insieme alle 3 intenfacce sopra serve per il drag & drop del RecyclerView delle immagini in upload
 class SimpleItemTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
     var mAdapter = adapter
     override fun isLongPressDragEnabled(): Boolean {
@@ -65,6 +75,38 @@ class SimpleItemTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouch
         mAdapter.onItemDismiss(viewHolder.adapterPosition)
     }
 
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        // seleziona solo l'item corrente e chiama la funzione rispettiva direttamente nell'adapter
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            if (viewHolder is ItemTouchHelpedViewHolder) {
+                val itemViewHolder = viewHolder as ItemTouchHelpedViewHolder
+                itemViewHolder.onItemSelected()
+            }
+        }
 
+        super.onSelectedChanged(viewHolder, actionState)
+    }
+
+    override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) {
+        super.clearView(recyclerView, viewHolder)
+
+        if (viewHolder is ItemTouchHelpedViewHolder) {
+            val itemViewHolder = viewHolder as ItemTouchHelpedViewHolder
+            itemViewHolder.onItemClear()
+        }
+    }
+}
+
+// adapter Viewpager
+class SimpleViewPagerAdapter(fm : FragmentManager,private val list : List<Fragment>) : FragmentStatePagerAdapter(fm){
+    override fun getItem(position: Int): Fragment {
+       return list[position]
+    }
+
+    override fun getCount(): Int = list.size
 
 }
+
+
+
+

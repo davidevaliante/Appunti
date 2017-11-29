@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animateLayoutChanges="true"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/light_grey"
+    android:backgroundTint="@color/lightest_grey"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        android:padding="2dp"
+        android:layout_margin="6dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/pageNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="1" />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
     <ImageView
-        android:scaleType="centerCrop"
         app:srcCompat="@drawable/ic_gallery_icon"
+        android:scaleType="centerCrop"
         android:id="@+id/userImageHolder"
         android:layout_width="130dp"
         android:layout_height="130dp" />
+
+    <ImageView
+        android:background="@color/black_shade_80"
+        android:padding="45dp"
+        app:srcCompat="@drawable/ic_move"
+        android:scaleType="centerCrop"
+        android:id="@+id/moveToggle"
+        android:layout_width="130dp"
+        android:layout_height="130dp" />
+
 
 </android.support.v7.widget.CardView>
